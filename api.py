@@ -2,10 +2,10 @@ from tweepy import OAuthHandler
 import tweepy
 
 #consumer key, consumer secret, access token, access secret.
-consumer_key="3ssugLcD9o77dRyZCveWQQW4z"
-consumer_secret="Hy5vKHVd4SBDqQGOs0hP5BYFLAJQWwsFR5MVW4M0Fvksu3XiTw"
-access_token="1134726781217284096-n3loG4HSo94tIVEQot1OGUkRcqPPXf"
-access_secret="ScFCe0A8au14geQdwTnAamCH6smH8GJs7JiJuVOy2gLla"
+consumer_key="<your key here>"
+consumer_secret="<your key here>"
+access_token="<your key here>"
+access_secret="<your key here>"
 
 auth = OAuthHandler(consumer_key , consumer_secret)
 auth.set_access_token(access_token , access_secret)
@@ -46,17 +46,18 @@ def BuildTrainingSet(corpusfile , tweetdatafile):
 
     rate_limit = 180
     sleep_time = 900/180
-    
+
     for tweet in corpus:
         try:
             status = api.get_status(tweet['tweet_id'] , tweet_mode='extended')
             counnt += 1
-            print("tweet_fetched  " + status.full_text + "  " + counnt)
+            print("tweet_fetched  " + status.full_text + "      and count is " + str(counnt))
             tweet['text'] = status.full_text
             TrainingSet.append(tweet)
             time.sleep(sleep_time)
         except:
             print("Tweet Could Not Be Fetched")
+            time.sleep(sleep_time)
             continue
 
     with open(tweetdatafile , 'w') as csvfile:
