@@ -11,25 +11,20 @@ auth = OAuthHandler(consumer_key , consumer_secret)
 auth.set_access_token(access_token , access_secret)
 api = tweepy.API(auth)
 
-def BuidTestSet(query):
-    lang = 'en'
-    max_tweets = 200
-    tweets_fetched = []
-    for tweet in tweepy.Cursor(api.search,q=query,lang=lang , tweet_mode = 'extended').items(max_tweets):
-        tweets_fetched.append({'text':tweet._json['full_text'] , 'label':None})
-        # print(tweet)
-        # print(tweet._json['full_text'])
-        # print()
-    return tweets_fetched
+class TestDataSet():
+    def __init__(self , query):
+        self.query = query
 
-#Tseting the Test Set
-# Testdataset = BuidTestSet(query="SAvBAN")
-# for item in Testdataset[0:4]:
-#     print(item['text'])
-#     print(item['label'])
-#     print()
-
-
+    def buildTestSet(self):
+        lang = 'en'
+        max_tweets = 100
+        tweets_fetched = []
+        for tweet in tweepy.Cursor(api.search,q=self.query,lang=lang , tweet_mode = 'extended').items(max_tweets):
+            tweets_fetched.append(['random', tweet._json['full_text'] , None])
+            # print(tweet)
+            # print(tweet._json['full_text'])
+            # print()
+        return tweets_fetched
 
 def BuildTrainingSet(corpusfile , tweetdatafile):
     import csv
@@ -73,4 +68,4 @@ def BuildTrainingSet(corpusfile , tweetdatafile):
 corpusfile = 'C:\\Users\Bharat\Desktop\Twitter Sentiment Analysis\corpus.csv'
 tweetdatafile = "C:\\Users\Bharat\Desktop\Twitter Sentiment Analysis\\tweet_training_set.csv"
 
-BuildTrainingSet(corpusfile , tweetdatafile)
+# BuildTrainingSet(corpusfile , tweetdatafile)

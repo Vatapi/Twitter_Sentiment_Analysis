@@ -5,22 +5,18 @@ from nltk.corpus import stopwords
 
 class PreProcessTweets:
     def __init__(self):
-        self._stopwords = set(stopwords.words('english') + list(punctuation) + ['AT-USER' , "URL"])
+        self._stopwords = set(stopwords.words('english') + list(punctuation) + ['AT_USER','URL'])
 
-    def processtweets(self , tweet):
-        tweet = tweet.lower()
-        tweet = re.sub( '((www.[^\s]+) | (https?://[^\s]+) | (http?://[^\s]+))' , 'URL' , tweet)
-        tweet = re.sub( '(@[^\s]+)' , 'AT_USER' , tweet)
-        tweet = re.sub( r'#([^\s]+)' , r'\1' , tweet)
-        tweet = word_tokenize(tweet)
-        for word in tweet:
-            if word not in self._stopwords:
-                return word
-
-    def processedtweets(self , list_of_tweets):
-        processed_tweets = []
+    def processedtweets(self, list_of_tweets):
+        processed_Tweets=[]
         for tweet in list_of_tweets:
-            pTweet = self.processtweets(tweet['text'])
-            processed_tweets.append(pTweet , tweet['label'])
+            processed_Tweets.append((self._processTweet(tweet[1]),tweet[2]))
+        return processed_Tweets
 
-        return processed_tweets
+    def _processTweet(self, tweet):
+        tweet = tweet.lower() # convert text to lower-case
+        tweet = re.sub('((www\.[^\s]+)|(https?://[^\s]+))', 'URL', tweet) # remove URLs
+        tweet = re.sub('@[^\s]+', 'AT_USER', tweet) # remove usernames
+        tweet = re.sub(r'#([^\s]+)', r'\1', tweet) # remove the # in #hashtag
+        tweet = word_tokenize(tweet) # remove repeated characters (helloooooooo into hello)
+        return [word for word in tweet if word not in self._stopwords]
