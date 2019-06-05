@@ -2,10 +2,10 @@ from tweepy import OAuthHandler
 import tweepy
 
 #consumer key, consumer secret, access token, access secret.
-consumer_key="<your key here>"
-consumer_secret="<your key here>"
-access_token="<your key here>"
-access_secret="<your key here>"
+consumer_key = "<yourkeyhere>"
+consumer_secret = "<yourkeyhere>"
+access_token = "<yourkeyhere>"
+access_secret="<yourkeyhere>"
 
 auth = OAuthHandler(consumer_key , consumer_secret)
 auth.set_access_token(access_token , access_secret)
@@ -17,7 +17,7 @@ class TestDataSet():
 
     def buildTestSet(self):
         lang = 'en'
-        max_tweets = 100
+        max_tweets = 1000
         tweets_fetched = []
         for tweet in tweepy.Cursor(api.search,q=self.query,lang=lang , tweet_mode = 'extended').items(max_tweets):
             tweets_fetched.append(['random', tweet._json['full_text'] , None])
