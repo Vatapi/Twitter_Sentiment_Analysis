@@ -3,7 +3,6 @@ import pandas as pd
 from api import TestDataSet
 
 TrainingData = pd.read_csv('tweet_training_set.csv' , encoding='unicode_escape')
-TrainingData.columns = ['id' , 'text' , 'label' , 'topic']
 test = TestDataSet(query='narendramodi')
 TestData = test.buildTestSet()
 # for item in TestData[0:4]:
